@@ -105,7 +105,7 @@ const HomePage = () => {
     }
 
     const onClickSearchFilter = () => {
-        setCountriesFilter ({...countriesFilter, isLoading: true})
+        setCountriesFilter ({...countriesFilter, isLoading: true, error: ''})
         setFilterState(true)
         switch (inputFilter) {
             case 'region':
@@ -183,6 +183,8 @@ const HomePage = () => {
                 )
         }
     }
+
+    console.log('filtro', countriesFilter)
 
     return (
         <>
