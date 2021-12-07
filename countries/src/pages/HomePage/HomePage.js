@@ -1,13 +1,45 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useRequest from '../../hook/useRequest'
+import axios from 'axios'
 import logo  from '../../img/logo.svg'
 
 const HomePage = () => {
     const [inputFilter, setInputFilter] = useState()
     const [typeFilter, setTypeFilter] = useState()
-    const countries = useRequest('https://restcountries.com/v3.1/all')
+    const [countries, setCountries] = useState({
+        data: [],
+        isLoading: false,
+        error: ''
+    })
+    const [countriesFilter, setCountriesFilter] = useState({
+        data: [],
+        isLoading: false,
+        error: ''
+    })
+    const [filterState, setFilterState] = useState(false)
+
+    useEffect (() => {
+        setCountries ({...countries, isLoading: true})
+        
+        axios
+            .get('https://restcountries.com/v3.1/all')
+            .then((res) => {
+                setCountries({...countries, isLoading: false, data: res.data})
+            })
+            .catch((err) => {
+                setCountries({...countries, isLoading: false, error: err})
+            })
+    }, [])
+
+    // const countries = useRequest('https://restcountries.com/v3.1/all')
 
     const allCountries = countries && countries.data.map((iten, index) => {
+        return (
+            <img key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
+        )
+    })
+
+    const searchedCountries = countriesFilter && countriesFilter.data.map((iten, index) => {
         return (
             <img key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
         )
@@ -72,12 +104,85 @@ const HomePage = () => {
         }
     }
 
-    // const onClickSearchFilter = () => {
-    //         // Aqui será feito um switch case no qual
-    //         // para cada filtro será feita uma requisição diferente.
-    //         // que irá retornar os países filtrados (a resposta da requisição).
-    //     }
-    
+    const onClickSearchFilter = () => {
+        setCountriesFilter ({...countriesFilter, isLoading: true})
+        setFilterState(true)
+        switch (inputFilter) {
+            case 'region':
+                axios
+                    .get(`https://restcountries.com/v3.1/region/${typeFilter}`)
+                    .then((res) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                    })
+                    .catch((err) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                    })
+                break;
+            case 'capital':
+                axios
+                    .get(`https://restcountries.com/v3.1/capital/${typeFilter}`)
+                    .then((res) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                    })
+                    .catch((err) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                    })
+                break;
+            case 'lang':
+                axios
+                    .get(`https://restcountries.com/v3.1/translation/${typeFilter}`)
+                    .then((res) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                    })
+                    .catch((err) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                    })
+                break;
+            case 'country':
+                axios
+                    .get(`https://restcountries.com/v3.1/name/${typeFilter}`)
+                    .then((res) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                    })
+                    .catch((err) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                    })
+                break;
+            case 'cod':
+                axios
+                    .get(`https://restcountries.com/v2/callingcode/${typeFilter}`)
+                    .then((res) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                    })
+                    .catch((err) => {
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                    })
+                break;
+            default:
+                break
+        }
+    }
+
+    const countriesRender = () => {
+        switch (filterState){
+            case true:
+                return(
+                    <div>
+                        {countriesFilter.isLoading && <p>Carregando...</p>}
+                        {!countriesFilter.isLoading && countriesFilter.error && <p>Ocorreu um erro!</p>}
+                        {!countriesFilter.isLoading && searchedCountries}
+                    </div>
+                )
+            default:
+                return(
+                    <div>
+                        {countries.isLoading && <p>Carregando...</p>}
+                        {!countries.isLoading && countries.error && <p>Ocorreu um erro!</p>}
+                        {!countries.isLoading && allCountries}
+                    </div>
+                )
+        }
+    }
 
     return (
         <>
@@ -102,9 +207,9 @@ const HomePage = () => {
                     
                     {filter()}
                     
-                    <button>Pesquisar</button>
+                    <button onClick={onClickSearchFilter}>Pesquisar</button>
                 </div>
-                {allCountries}
+                {countriesRender()}
             </main>
         </>
     )
