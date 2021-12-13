@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import useRequest from '../../hook/useRequest'
 import axios from 'axios'
 import logo  from '../../img/logo.svg'
-import { Header } from './style'
+import Vector from '../../img/Vector.svg'
+import { Header, Filter, Input, Select, Country, Main } from './style'
 
 const HomePage = () => {
     const [inputFilter, setInputFilter] = useState()
@@ -34,13 +35,13 @@ const HomePage = () => {
 
     const allCountries = countries && countries.data.map((iten, index) => {
         return (
-            <img key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
+            <Country key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
         )
     })
 
     const searchedCountries = countriesFilter && countriesFilter.data.map((iten, index) => {
         return (
-            <img key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
+            <Country key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
         )
     }) 
 
@@ -48,44 +49,59 @@ const HomePage = () => {
         switch (inputFilter) {
             case 'region':
                 return(
-                    <select required value= {typeFilter} onChange= {(e) => setTypeFilter(e.target.value)}>
-                        <option disabled selected>Escolha uma região</option>
-                        <option value='africa'>África</option>
-                        <option value='america'>Américas</option>
-                        <option value='asia'>Ásia</option>
-                        <option value='europe'>Europa</option>
-                        <option value='oceania'>Oceania</option>
-                    </select>
+                    <>
+                        <p>Região</p>
+                        <Select required value= {typeFilter} onChange= {(e) => setTypeFilter(e.target.value)}>
+                            <option disabled selected>Escolha uma região</option>
+                            <option value='africa'>África</option>
+                            <option value='america'>Américas</option>
+                            <option value='asia'>Ásia</option>
+                            <option value='europe'>Europa</option>
+                            <option value='oceania'>Oceania</option>
+                        </Select>
+                    </>
                 )
             case 'capital':
                 return(
-                    <input 
-                        placeholder= 'Insira o nome da capital...' 
-                        required
-                        value={typeFilter} 
-                        onChange={(e) => setTypeFilter(e.target.value)}
-                    />
+                    <>
+                        <p>Capital</p>
+                        <Input 
+                            placeholder= 'Insira o nome da capital...' 
+                            required
+                            value={typeFilter} 
+                            onC hange={(e) => setTypeFilter(e.target.value)}
+                        />
+                    </>
+                    
                 )
             case 'lang':
                 return(
-                    <input 
-                        placeholder= 'Insira a linguagem no padrão ISO 639-2'
-                        type='text'
-                        minLength= '3'
-                        maxLength= '3'
-                        required
-                        value={typeFilter} 
-                        onChange={(e) => setTypeFilter(e.target.value)}
-                    />
+                    <>
+                        <p>Linguagem</p>
+                        <Input 
+                            placeholder= 'Insira a linguagem no padrão ISO 639-2'
+                            type='text'
+                            minLength= '3'
+                            maxLength= '3'
+                            required
+                            value={typeFilter} 
+                            onChange={(e) => setTypeFilter(e.target.value)}
+                        />
+                    </>
+                    
                 )
             case 'country':
                 return(
-                    <input
-                        placeholder= 'Insira o nome do país...'  
-                        required
-                        value={typeFilter} 
-                        onChange={(e) => setTypeFilter(e.target.value)}
-                    />
+                    <>
+                        <p>País</p>
+                        <Input
+                            placeholder= 'Insira o nome do país...'  
+                            required
+                            value={typeFilter} 
+                            onChange={(e) => setTypeFilter(e.target.value)}
+                        />
+                    </>
+                    
                 )
             default:
                 return (<div></div>)
@@ -166,12 +182,15 @@ const HomePage = () => {
         <>
             <Header>
                 <img src={logo} alt= 'Logo'/>
-                <button>Voltar</button>
+                <button>
+                    <img src={Vector} alt= 'vetor'/>
+                    <p>Voltar</p>
+                </button>
             </Header>
 
-            <main>
-                <div>
-                    <div>
+            <Main>
+                <Filter>
+                    <div className='typeFilter'>
                         <p>Filtrar por</p>
                         <select value= {inputFilter} onChange={(e) => setInputFilter(e.target.value)}>
                             <option value="" disabled selected>Escolha uma opção</option>
@@ -181,13 +200,16 @@ const HomePage = () => {
                             <option value='country'>País</option>
                         </select>
                     </div>
-                    
-                    {filter()}
+                    <div className='typeFilter'>
+                        {filter()}
+                    </div>
                     
                     <button onClick={onClickSearchFilter}>Pesquisar</button>
+                </Filter>
+                <div className='country'>
+                    {countriesRender()}
                 </div>
-                {countriesRender()}
-            </main>
+            </Main>
         </>
     )
 }
