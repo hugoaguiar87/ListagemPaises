@@ -89,6 +89,7 @@ export const Country = styled.img`
 `
 
 export const Main = styled.main`
+    margin-bottom: 100px ;
     .country{
         display: flex;
         justify-content: center;
