@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import useRequest from '../../hook/useRequest'
 import axios from 'axios'
 import logo  from '../../img/logo.svg'
+import { Header } from './style'
 
 const HomePage = () => {
     const [inputFilter, setInputFilter] = useState()
@@ -31,8 +32,6 @@ const HomePage = () => {
             })
     }, [])
 
-    // const countries = useRequest('https://restcountries.com/v3.1/all')
-
     const allCountries = countries && countries.data.map((iten, index) => {
         return (
             <img key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
@@ -43,7 +42,7 @@ const HomePage = () => {
         return (
             <img key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
         )
-    })
+    }) 
 
     const filter = () => {
         switch (inputFilter) {
@@ -88,74 +87,53 @@ const HomePage = () => {
                         onChange={(e) => setTypeFilter(e.target.value)}
                     />
                 )
-            case 'cod':
-                return(
-                    <input
-                        placeholder= 'Insira o código de chamada...' 
-                        required
-                        value={typeFilter}
-                        type= 'number' 
-                        min='0'
-                        onChange={(e) => setTypeFilter(e.target.value)}
-                    />
-                )
             default:
                 return (<div></div>)
         }
     }
 
     const onClickSearchFilter = () => {
-        setCountriesFilter ({...countriesFilter, isLoading: true, error: ''})
+        setCountriesFilter ({...countriesFilter, isLoading: true, error: '', data: []})
         setFilterState(true)
         switch (inputFilter) {
             case 'region':
                 axios
                     .get(`https://restcountries.com/v3.1/region/${typeFilter}`)
                     .then((res) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data, error: ''})
                     })
                     .catch((err) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err.response.data, data: []})
                     })
                 break;
             case 'capital':
                 axios
                     .get(`https://restcountries.com/v3.1/capital/${typeFilter}`)
                     .then((res) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data, error: ''})
                     })
                     .catch((err) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err.response.data, data: []})
                     })
                 break;
             case 'lang':
                 axios
                     .get(`https://restcountries.com/v3.1/translation/${typeFilter}`)
                     .then((res) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data, error: ''})
                     })
                     .catch((err) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err.response.data, data: []})
                     })
                 break;
             case 'country':
                 axios
                     .get(`https://restcountries.com/v3.1/name/${typeFilter}`)
                     .then((res) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
+                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data, error: ''})
                     })
                     .catch((err) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
-                    })
-                break;
-            case 'cod':
-                axios
-                    .get(`https://restcountries.com/v2/callingcode/${typeFilter}`)
-                    .then((res) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, data: res.data})
-                    })
-                    .catch((err) => {
-                        setCountriesFilter({...countriesFilter, isLoading: false, error: err})
+                        setCountriesFilter({...countriesFilter, isLoading: false, error: err.response.data, data: []})
                     })
                 break;
             default:
@@ -184,14 +162,12 @@ const HomePage = () => {
         }
     }
 
-    console.log('filtro', countriesFilter)
-
     return (
         <>
-            <header>
+            <Header>
                 <img src={logo} alt= 'Logo'/>
                 <button>Voltar</button>
-            </header>
+            </Header>
 
             <main>
                 <div>
@@ -203,7 +179,6 @@ const HomePage = () => {
                             <option value='capital'>Capital</option>
                             <option value='lang'>Lingua</option>
                             <option value='country'>País</option>
-                            <option value='cod'>Código de ligação</option>
                         </select>
                     </div>
                     
