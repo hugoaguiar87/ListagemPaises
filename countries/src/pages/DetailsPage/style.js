@@ -30,3 +30,17 @@ export const Header = styled.header`
         cursor: pointer;
     }
 `
+
+export const InfoCountry = styled.div`
+    display: flex;
+    gap: 30px;
+
+    span{
+        padding: 0px 5px;
+    }
+`
+
+export const Main = styled.main`
+    padding: 120px 200px;
+
+`

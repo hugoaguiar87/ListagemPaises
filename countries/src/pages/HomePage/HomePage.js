@@ -1,18 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import logo  from '../../img/logo.svg'
 import Vector from '../../img/Vector.svg'
 import { Header, Filter, Input, Select, Country, Main } from './style'
 import { useNavigate } from 'react-router-dom'
+import GlobalStateContext from '../../GlobalState/GlobalStateContext'
 
 const HomePage = () => {
+    const {countries} = useContext(GlobalStateContext)
     const [inputFilter, setInputFilter] = useState()
     const [typeFilter, setTypeFilter] = useState()
-    const [countries, setCountries] = useState({
-        data: [],
-        isLoading: false,
-        error: ''
-    })
     const [countriesFilter, setCountriesFilter] = useState({
         data: [],
         isLoading: false,
@@ -21,27 +18,15 @@ const HomePage = () => {
     const [filterState, setFilterState] = useState(false)
     const navigate = useNavigate()
 
-    console.log(countries)
 
-    useEffect (() => {
-        setCountries ({...countries, isLoading: true})
-        
-        axios
-            .get('https://restcountries.com/v3.1/all')
-            .then((res) => {
-                setCountries({...countries, isLoading: false, data: res.data})
-            })
-            .catch((err) => {
-                setCountries({...countries, isLoading: false, error: err})
-            })
-    }, [])
+    console.log('estado global',countries)
 
     const allCountries = countries && countries.data.map((iten, index) => {
         return (
             <Country 
                 key={index} 
                 src= {iten.flags.png} 
-                alt='Bandeira do País'
+                alt='Country Flag'
                 onClick={() => onClickCountry(iten.name.common)}
             />
         )
@@ -52,7 +37,7 @@ const HomePage = () => {
             <Country 
                 key={index} 
                 src= {iten.flags.png} 
-                alt='Bandeira do País'
+                alt='Country Flag'
                 onClick={() => onClickCountry(iten.name.common)}
             />
         )
@@ -63,13 +48,13 @@ const HomePage = () => {
             case 'region':
                 return(
                     <>
-                        <p>Região</p>
+                        <p>Region</p>
                         <Select required value= {typeFilter} onChange= {(e) => setTypeFilter(e.target.value)}>
-                            <option disabled selected>Escolha uma região</option>
-                            <option value='africa'>África</option>
-                            <option value='america'>Américas</option>
-                            <option value='asia'>Ásia</option>
-                            <option value='europe'>Europa</option>
+                            <option disabled selected>Choose a region...</option>
+                            <option value='africa'>Africa</option>
+                            <option value='america'>Americas</option>
+                            <option value='asia'>Asia</option>
+                            <option value='europe'>Europe</option>
                             <option value='oceania'>Oceania</option>
                         </Select>
                     </>
@@ -79,7 +64,7 @@ const HomePage = () => {
                     <>
                         <p>Capital</p>
                         <Input 
-                            placeholder= 'Insira o nome da capital...' 
+                            placeholder= 'Enter the name of the capital...' 
                             required
                             value={typeFilter} 
                             onChange={(e) => setTypeFilter(e.target.value)}
@@ -90,9 +75,9 @@ const HomePage = () => {
             case 'lang':
                 return(
                     <>
-                        <p>Linguagem</p>
+                        <p>Language</p>
                         <Input 
-                            placeholder= 'Insira a linguagem no padrão ISO 639-2'
+                            placeholder= 'Enter language in ISO 639-2 standard...'
                             type='text'
                             minLength= '3'
                             maxLength= '3'
@@ -106,9 +91,9 @@ const HomePage = () => {
             case 'country':
                 return(
                     <>
-                        <p>País</p>
+                        <p>Country</p>
                         <Input
-                            placeholder= 'Insira o nome do país...'  
+                            placeholder= 'Enter the name of the country...'  
                             required
                             value={typeFilter} 
                             onChange={(e) => setTypeFilter(e.target.value)}
@@ -179,16 +164,16 @@ const HomePage = () => {
             case true:
                 return(
                     <div>
-                        {countriesFilter.isLoading && <p>Carregando...</p>}
-                        {!countriesFilter.isLoading && countriesFilter.error && <p>País não encontrado! Tente novamente.</p>}
+                        {countriesFilter.isLoading && <p>Loading...</p>}
+                        {!countriesFilter.isLoading && countriesFilter.error && <p>Country not found! Try again.</p>}
                         {!countriesFilter.isLoading && searchedCountries}
                     </div>
                 )
             default:
                 return(
                     <div>
-                        {countries.isLoading && <p>Carregando...</p>}
-                        {!countries.isLoading && countries.error && <p>País não encontrado! Tente novamente.</p>}
+                        {countries.isLoading && <p>Loading...</p>}
+                        {!countries.isLoading && countries.error && <p>Country not found! Try again.</p>}
                         {!countries.isLoading && allCountries}
                     </div>
                 )
@@ -200,28 +185,28 @@ const HomePage = () => {
             <Header>
                 <img src={logo} alt= 'Logo'/>
                 <button onClick={() => navigate(-1)}>
-                    <img src={Vector} alt= 'vetor'/>
-                    <p>Voltar</p>
+                    <img src={Vector} alt= 'vector'/>
+                    <p>Return</p>
                 </button>
             </Header>
 
             <Main>
                 <Filter>
                     <div className='typeFilter'>
-                        <p>Filtrar por</p>
+                        <p>Filter by</p>
                         <select value= {inputFilter} onChange={(e) => setInputFilter(e.target.value)}>
-                            <option value="" disabled selected>Escolha uma opção</option>
-                            <option value='region'>Região</option>
+                            <option value="" disabled selected>Choose an option</option>
+                            <option value='region'>Region</option>
                             <option value='capital'>Capital</option>
-                            <option value='lang'>Lingua</option>
-                            <option value='country'>País</option>
+                            <option value='lang'>Language</option>
+                            <option value='country'>Country</option>
                         </select>
                     </div>
                     <div className='typeFilter'>
                         {filter()}
                     </div>
                     
-                    <button onClick={onClickSearchFilter}>Pesquisar</button>
+                    <button onClick={onClickSearchFilter}>Search</button>
                 </Filter>
                 <div className='country'>
                     {countriesRender()}

@@ -1,10 +1,10 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import logo  from '../../img/logo.svg'
 import Vector from '../../img/Vector.svg'
-import { Header } from './style'
+import { Header, InfoCountry, Main } from './style'
 
 
 
@@ -16,8 +16,10 @@ const DetailsPage = () => {
         isLoading: false,
         error: ''
     })
+    const [ bordersCountries, setBordersCountries ] = useState([])
 
-    console.log('pais', nameCountry)
+    console.log(countryDetails)
+
 
     useEffect (() => {
         setCountryDetails({...countryDetails, isLoading: true})
@@ -31,8 +33,29 @@ const DetailsPage = () => {
         })
     }, [])
 
-    console.log(countryDetails)
-    
+
+    useEffect (() => {
+        
+    }, [])
+
+
+    const infoCountry = countryDetails.data && countryDetails.data.map((info, index) => {
+        return (
+            <InfoCountry key={index}>
+                <img src= {info.flags.png} alt="Country flag" />
+                <div>
+                    <p> Name: {info.name}</p>
+                    <p> Capital: {info.capital}</p>
+                    <p> Region: {info.region}</p>
+                    <p> Subregion: {info.subregion}</p>
+                    <p> Population: {info.population}</p>
+                    <p> Languages: {info.languages.map(lang => <span>{lang.name}</span>)}</p>
+                </div>
+            </InfoCountry>
+        )
+    })
+
+
     return(
         <>
             <Header>
@@ -42,6 +65,10 @@ const DetailsPage = () => {
                     <p>Voltar</p>
                 </button>
             </Header>
+
+            <Main>
+                {infoCountry}
+            </Main>
         </>
     )
 }
