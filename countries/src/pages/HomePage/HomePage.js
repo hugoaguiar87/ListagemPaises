@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import useRequest from '../../hook/useRequest'
 import axios from 'axios'
 import logo  from '../../img/logo.svg'
 import Vector from '../../img/Vector.svg'
 import { Header, Filter, Input, Select, Country, Main } from './style'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
     const [inputFilter, setInputFilter] = useState()
@@ -19,6 +19,9 @@ const HomePage = () => {
         error: ''
     })
     const [filterState, setFilterState] = useState(false)
+    const navigate = useNavigate()
+
+    console.log(countries)
 
     useEffect (() => {
         setCountries ({...countries, isLoading: true})
@@ -35,13 +38,23 @@ const HomePage = () => {
 
     const allCountries = countries && countries.data.map((iten, index) => {
         return (
-            <Country key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
+            <Country 
+                key={index} 
+                src= {iten.flags.png} 
+                alt='Bandeira do País'
+                onClick={() => onClickCountry(iten.name.common)}
+            />
         )
     })
 
     const searchedCountries = countriesFilter && countriesFilter.data.map((iten, index) => {
         return (
-            <Country key={index} src= {iten.flags.svg} alt='Bandeira do País'/>
+            <Country 
+                key={index} 
+                src= {iten.flags.png} 
+                alt='Bandeira do País'
+                onClick={() => onClickCountry(iten.name.common)}
+            />
         )
     }) 
 
@@ -69,7 +82,7 @@ const HomePage = () => {
                             placeholder= 'Insira o nome da capital...' 
                             required
                             value={typeFilter} 
-                            onC hange={(e) => setTypeFilter(e.target.value)}
+                            onChange={(e) => setTypeFilter(e.target.value)}
                         />
                     </>
                     
@@ -106,6 +119,10 @@ const HomePage = () => {
             default:
                 return (<div></div>)
         }
+    }
+
+    const onClickCountry = (nameCountry) => {
+        navigate (`/details/${nameCountry}`)
     }
 
     const onClickSearchFilter = () => {
@@ -163,7 +180,7 @@ const HomePage = () => {
                 return(
                     <div>
                         {countriesFilter.isLoading && <p>Carregando...</p>}
-                        {!countriesFilter.isLoading && countriesFilter.error && <p>Ocorreu um erro!</p>}
+                        {!countriesFilter.isLoading && countriesFilter.error && <p>País não encontrado! Tente novamente.</p>}
                         {!countriesFilter.isLoading && searchedCountries}
                     </div>
                 )
@@ -171,7 +188,7 @@ const HomePage = () => {
                 return(
                     <div>
                         {countries.isLoading && <p>Carregando...</p>}
-                        {!countries.isLoading && countries.error && <p>Ocorreu um erro!</p>}
+                        {!countries.isLoading && countries.error && <p>País não encontrado! Tente novamente.</p>}
                         {!countries.isLoading && allCountries}
                     </div>
                 )
@@ -182,7 +199,7 @@ const HomePage = () => {
         <>
             <Header>
                 <img src={logo} alt= 'Logo'/>
-                <button>
+                <button onClick={() => navigate(-1)}>
                     <img src={Vector} alt= 'vetor'/>
                     <p>Voltar</p>
                 </button>

@@ -85,6 +85,7 @@ export const Country = styled.img`
     width: 316px;
     height: 181px;
     padding: 10px 60px;
+    cursor: pointer;
     
 `
 
