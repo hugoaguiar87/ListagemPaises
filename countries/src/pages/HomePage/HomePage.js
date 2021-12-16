@@ -19,8 +19,6 @@ const HomePage = () => {
     const navigate = useNavigate()
 
 
-    console.log('estado global',countries)
-
     const allCountries = countries && countries.data.map((iten, index) => {
         return (
             <Country 
