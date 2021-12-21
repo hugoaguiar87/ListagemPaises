@@ -6,6 +6,8 @@ import { Header, Filter, Input, Select, Country, Main } from './style'
 import { useNavigate } from 'react-router-dom'
 import GlobalStateContext from '../../GlobalState/GlobalStateContext'
 
+import {Paginate} from '../../Paginate/Paginate.js'
+
 const HomePage = () => {
     const {countries} = useContext(GlobalStateContext)
     const [inputFilter, setInputFilter] = useState()
@@ -17,6 +19,8 @@ const HomePage = () => {
     })
     const [filterState, setFilterState] = useState(false)
     const navigate = useNavigate()
+
+    const [current, setCurrent] = useState(1)
 
 
     const allCountries = countries && countries.data.map((iten, index) => {
@@ -177,6 +181,9 @@ const HomePage = () => {
                 )
         }
     }
+    
+    console.log(countries)
+    console.log('page', current)
 
     return (
         <>
@@ -209,6 +216,15 @@ const HomePage = () => {
                 <div className='country'>
                     {countriesRender()}
                 </div>
+
+                <Paginate 
+                    records= {countries.data.length}
+                    limit= {15}
+                    current= {current}
+                    onChange= {setCurrent}
+                    delta= {1}
+                    fixed= {1}
+                />
             </Main>
         </>
     )
