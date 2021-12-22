@@ -23,7 +23,16 @@ const HomePage = () => {
     const [current, setCurrent] = useState(1)
 
 
-    const allCountries = countries && countries.data.map((iten, index) => {
+    const allCountries = countries && countries.data.filter((iten, index) => {
+        const min = (current -1)*12
+        const max = current*12
+
+        if ((index+1) > min && (index+1) <= max) {
+            return true
+        }
+
+    })
+    .map((iten, index) => {
         return (
             <Country 
                 key={index} 
@@ -34,7 +43,15 @@ const HomePage = () => {
         )
     })
 
-    const searchedCountries = countriesFilter && countriesFilter.data.map((iten, index) => {
+    const searchedCountries = countriesFilter && countriesFilter.data.filter((iten, index) => {
+        const min = (current -1)*12
+        const max = current*12
+
+        if ((index+1) > min && (index+1) <= max) {
+            return true
+        }
+    })
+    .map((iten, index) => {
         return (
             <Country 
                 key={index} 
@@ -169,6 +186,15 @@ const HomePage = () => {
                         {countriesFilter.isLoading && <p>Loading...</p>}
                         {!countriesFilter.isLoading && countriesFilter.error && <p>Country not found! Try again.</p>}
                         {!countriesFilter.isLoading && searchedCountries}
+
+                        <Paginate 
+                            records= {countriesFilter.data.length}
+                            limit= {12}
+                            current= {current}
+                            onChange= {setCurrent}
+                            delta= {1}
+                            fixed= {1}
+                        />
                     </div>
                 )
             default:
@@ -177,6 +203,14 @@ const HomePage = () => {
                         {countries.isLoading && <p>Loading...</p>}
                         {!countries.isLoading && countries.error && <p>Country not found! Try again.</p>}
                         {!countries.isLoading && allCountries}
+                        <Paginate 
+                            records= {countries.data.length}
+                            limit= {12}
+                            current= {current}
+                            onChange= {setCurrent}
+                            delta= {1}
+                            fixed= {1}
+                        />
                     </div>
                 )
         }
@@ -217,14 +251,6 @@ const HomePage = () => {
                     {countriesRender()}
                 </div>
 
-                <Paginate 
-                    records= {countries.data.length}
-                    limit= {15}
-                    current= {current}
-                    onChange= {setCurrent}
-                    delta= {1}
-                    fixed= {1}
-                />
             </Main>
         </>
     )
