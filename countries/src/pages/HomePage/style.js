@@ -29,6 +29,18 @@ export const Header = styled.header`
 
         cursor: pointer;
     }
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+        button{
+            border: 0px;
+            width: 5px;
+            height: 0px;
+            p{
+                display: none;
+            }
+        }
+    }
 `
 
 export const Filter = styled.div`
@@ -65,6 +77,18 @@ export const Filter = styled.div`
 
         cursor: pointer;
     }
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+            padding-bottom: 10px;
+        }
+
+    }
 `
 
 export const Input = styled.input`
@@ -86,6 +110,16 @@ export const Country = styled.img`
     height: 181px;
     padding: 10px 60px;
     cursor: pointer;
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        width: 100%;
+        padding: 0px;
+        padding-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     
 `
 
@@ -95,5 +129,23 @@ export const Main = styled.main`
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        width: 100%;
+
+    }
+`
+
+export const Div = styled.div`
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        padding: 30px;
+
     }
 `

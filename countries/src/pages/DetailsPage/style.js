@@ -29,6 +29,18 @@ export const Header = styled.header`
 
         cursor: pointer;
     }
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+        button{
+            border: 0px;
+            width: 5px;
+            height: 0px;
+            p{
+                display: none;
+            }
+        }
+    }
 `
 
 export const InfoCountry = styled.div`
@@ -50,6 +62,25 @@ export const InfoCountry = styled.div`
         width: 443px;
         height: 258px;
     }
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        padding: 0px;
+
+        img {
+            width: 316px;
+            height: 181px;
+        }
+
+        div{
+            align-self: start;
+            margin-left: 50px ;
+        }
+    }
 `
 
 export const Main = styled.main`
@@ -70,6 +101,29 @@ export const Main = styled.main`
             padding-right: 30px;
             padding-top: 20px;
             cursor: pointer;
+        }
+    }
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        padding: 0px;
+
+        margin: 70px 0px;
+
+        .neighboring{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 316px;
+                height: 181px;
+            }
+
+            p{
+                align-self: start;
+                margin-left: 50px;
+            }
         }
     }
 

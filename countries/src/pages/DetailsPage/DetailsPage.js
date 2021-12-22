@@ -94,7 +94,7 @@ const DetailsPage = () => {
     return(
         <>
             <Header>
-                <img src={logo} alt= 'Logo'/>
+                <img src={logo} alt= 'Logo' onClick= {() => navigate("/")} style= {{cursor: "pointer"}}/>
                 <button onClick={() => navigate('/')}>
                     <img src={Vector} alt= 'vetor'/>
                     <p>Return</p>

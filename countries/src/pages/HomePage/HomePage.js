@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import logo  from '../../img/logo.svg'
 import Vector from '../../img/Vector.svg'
-import { Header, Filter, Input, Select, Country, Main } from './style'
+import { Header, Filter, Input, Select, Country, Main, Div } from './style'
 import { useNavigate } from 'react-router-dom'
 import GlobalStateContext from '../../GlobalState/GlobalStateContext'
 
@@ -182,7 +182,7 @@ const HomePage = () => {
         switch (filterState){
             case true:
                 return(
-                    <div>
+                    <Div>
                         {countriesFilter.isLoading && <p>Loading...</p>}
                         {!countriesFilter.isLoading && countriesFilter.error && <p>Country not found! Try again.</p>}
                         {!countriesFilter.isLoading && searchedCountries}
@@ -195,11 +195,11 @@ const HomePage = () => {
                             delta= {1}
                             fixed= {1}
                         />
-                    </div>
+                    </Div>
                 )
             default:
                 return(
-                    <div>
+                    <Div>
                         {countries.isLoading && <p>Loading...</p>}
                         {!countries.isLoading && countries.error && <p>Country not found! Try again.</p>}
                         {!countries.isLoading && allCountries}
@@ -211,7 +211,7 @@ const HomePage = () => {
                             delta= {1}
                             fixed= {1}
                         />
-                    </div>
+                    </Div>
                 )
         }
     }
@@ -222,7 +222,7 @@ const HomePage = () => {
     return (
         <>
             <Header>
-                <img src={logo} alt= 'Logo'/>
+                <img src={logo} alt= 'Logo' onClick= {() => navigate("/")} style= {{cursor: "pointer"}} />
                 <button onClick={() => navigate(-1)}>
                     <img src={Vector} alt= 'vector'/>
                     <p>Return</p>

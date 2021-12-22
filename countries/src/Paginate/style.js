@@ -19,10 +19,21 @@ export const Button = styled.button`
 
     margin: 10px;
     cursor: pointer;
+
+    /* @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        width: 100%;
+    } */
 `
 
 export const Div = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 50px;
+    width: 100%;
+
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        width: 100%;
+        padding: 0px;
+        flex-wrap: wrap;
+    }
 `
