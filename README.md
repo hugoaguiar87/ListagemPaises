@@ -58,4 +58,7 @@ para uma nova página com detalhes do país clicado.
 > - ![4](https://user-images.githubusercontent.com/86810734/147141786-579eab82-0acd-4e6b-8cb9-9dbe3b244bd2.png)
 
  
- 
+ ---
+
+> Esse desafio foi produzido com muito ❤️ por **[@Hugo Aguiar](https://www.linkedin.com/in/hugoaguiar87/)**
+---
