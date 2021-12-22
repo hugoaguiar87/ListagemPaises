@@ -1,12 +1,12 @@
 import axios from "axios"
 import React, { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import GlobalStateContext from "../../GlobalState/GlobalStateContext"
 
 import logo  from '../../img/logo.svg'
 import Vector from '../../img/Vector.svg'
-import { Header, InfoCountry, Main } from './style'
 
+import { Header, InfoCountry, Main } from './style'
+import GlobalStateContext from "../../GlobalState/GlobalStateContext"
 import {Paginate} from '../../Paginate/Paginate.js'
 
 
@@ -22,10 +22,6 @@ const DetailsPage = () => {
     })
     const [ bordersCountries, setBordersCountries ] = useState()
     const [current, setCurrent] = useState(1)
-
-    console.log('PaisDeatils',countryDetails)
-    console.log('Global', countries)
-    console.log('borde', bordersCountries)
 
     useEffect (() => {
         setCountryDetails({...countryDetails, isLoading: true})
@@ -94,7 +90,12 @@ const DetailsPage = () => {
     return(
         <>
             <Header>
-                <img src={logo} alt= 'Logo' onClick= {() => navigate("/")} style= {{cursor: "pointer"}}/>
+                <img 
+                    src={logo} 
+                    alt= 'Logo' 
+                    onClick= {() => navigate("/")} 
+                    style= {{cursor: "pointer"}}
+                />
                 <button onClick={() => navigate('/')}>
                     <img src={Vector} alt= 'vetor'/>
                     <p>Return</p>

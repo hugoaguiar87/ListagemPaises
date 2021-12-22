@@ -6,7 +6,10 @@ const Page = ({ idx, active, onChange }) => {
     const handleClick = () => onChange(idx)
 
     return (
-        <Button onClick={handleClick} style= {{background: active ? "#6D2080" : "#FFFFFF", color: active ? "white" : "#8D8D8D"}} >
+        <Button 
+            onClick={handleClick} 
+            style= {{background: active ? "#6D2080" : "#FFFFFF", color: active ? "white" : "#8D8D8D"}} 
+        >
             {idx}
         </Button>
     )
@@ -22,12 +25,6 @@ export const Paginate = ({ records, limit, current, delta, fixed, onChange }) =>
         onChange 
     })
 
-    console.log('start', start)
-    console.log('end', end)
-    
-    const goToPrev = () => onChange(prev)
-    const goToNext = () => onChange(next)
-
     return (
         <Div> 
             
@@ -37,19 +34,20 @@ export const Paginate = ({ records, limit, current, delta, fixed, onChange }) =>
                 <Page idx={idx} active= {current === idx} onChange= {onChange} />
             ))}
 
-            {prev && (<Button onClick= {goToPrev}> ... </Button>)}
+            {prev && (<Button onClick= {() => onChange(prev)}> ... </Button>)}
 
             {middle.map(idx => (
                 <Page idx={idx} active= {current === idx} onChange= {onChange} />
             ))}
 
-            {next && (<Button onClick= {goToNext} > ... </Button>)}
+            {next && (<Button onClick= {() => onChange(next)} > ... </Button>)}
 
             {end.map(idx => (
                 <Page idx={idx} active= {current === idx} onChange= {onChange} />
             ))}
 
             {end && end.length !== 0 && end[0] !== current  && (<Button onClick= {() => onChange(current + 1)} > {`>`} </Button>)}
+            
         </Div>
     )
 }

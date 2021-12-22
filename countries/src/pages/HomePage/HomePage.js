@@ -1,9 +1,11 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 import logo  from '../../img/logo.svg'
 import Vector from '../../img/Vector.svg'
+
 import { Header, Filter, Input, Select, Country, Main, Div } from './style'
-import { useNavigate } from 'react-router-dom'
 import GlobalStateContext from '../../GlobalState/GlobalStateContext'
 
 import {Paginate} from '../../Paginate/Paginate.js'
@@ -121,7 +123,7 @@ const HomePage = () => {
                     
                 )
             default:
-                return (<div></div>)
+                return (<div/>)
         }
     }
 
@@ -216,13 +218,15 @@ const HomePage = () => {
         }
     }
     
-    console.log(countries)
-    console.log('page', current)
-
     return (
         <>
             <Header>
-                <img src={logo} alt= 'Logo' onClick= {() => navigate("/")} style= {{cursor: "pointer"}} />
+                <img 
+                    src={logo} 
+                    alt= 'Logo' 
+                    onClick= {() => navigate("/")} 
+                    style= {{cursor: "pointer"}} 
+                />
                 <button onClick={() => navigate(-1)}>
                     <img src={Vector} alt= 'vector'/>
                     <p>Return</p>
@@ -233,7 +237,10 @@ const HomePage = () => {
                 <Filter>
                     <div className='typeFilter'>
                         <p>Filter by</p>
-                        <select value= {inputFilter} onChange={(e) => setInputFilter(e.target.value)}>
+                        <select 
+                            value= {inputFilter} 
+                            onChange={(e) => setInputFilter(e.target.value)}
+                        >
                             <option value="" disabled selected>Choose an option</option>
                             <option value='region'>Region</option>
                             <option value='capital'>Capital</option>
