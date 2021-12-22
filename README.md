@@ -49,4 +49,13 @@ para uma nova página com detalhes do país clicado.
  
  <h2 align="center">Imagens</h2>
  
+ > - ![1](https://user-images.githubusercontent.com/86810734/147141735-2f1f72dd-a005-4d7f-99e3-8706020283a4.png)
+
+> - ![2](https://user-images.githubusercontent.com/86810734/147141750-8c40984d-57e9-4d3b-ba04-2e867f2ce690.png)
+
+> - ![3](https://user-images.githubusercontent.com/86810734/147141774-2f532ed2-89a8-4290-aad2-10605298d416.png)
+
+> - ![4](https://user-images.githubusercontent.com/86810734/147141786-579eab82-0acd-4e6b-8cb9-9dbe3b244bd2.png)
+
+ 
  
