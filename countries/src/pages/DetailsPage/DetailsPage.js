@@ -7,6 +7,8 @@ import logo  from '../../img/logo.svg'
 import Vector from '../../img/Vector.svg'
 import { Header, InfoCountry, Main } from './style'
 
+import {Paginate} from '../../Paginate/Paginate.js'
+
 
 
 const DetailsPage = () => {
@@ -19,6 +21,7 @@ const DetailsPage = () => {
         error: ''
     })
     const [ bordersCountries, setBordersCountries ] = useState()
+    const [current, setCurrent] = useState(1)
 
     console.log('PaisDeatils',countryDetails)
     console.log('Global', countries)
@@ -64,6 +67,14 @@ const DetailsPage = () => {
             
         }
     })
+    .filter ((iten, index) => {
+        const min = (current -1)*3
+        const max = current*3
+
+        if ((index+1) > min && (index+1) <= max) {
+            return true
+        }
+    })
     .map((iten, index) => {
         return (
             <img
@@ -96,6 +107,16 @@ const DetailsPage = () => {
                     {countryDetails.isLoading && <p>Loading...</p>}
                     {!countryDetails.isLoading && !bordersCountries && <p>This country does not border any country.</p>}
                     {!countryDetails.isLoading && bordersCountries && bordersCountryRender}
+                    {!countryDetails.isLoading && bordersCountries && 
+                        <Paginate 
+                            records= {bordersCountries.length}
+                            limit= {3}
+                            current= {current}
+                            onChange= {setCurrent}
+                            delta= {1}
+                            fixed= {1}
+                        />
+                    }
                 </div>
                 
             </Main>
