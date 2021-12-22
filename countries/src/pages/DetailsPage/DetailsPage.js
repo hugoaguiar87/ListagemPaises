@@ -86,6 +86,7 @@ const DetailsPage = () => {
     )})
 
     const onClickCountry = (nameCountry) => {
+        setCurrent(1)
         navigate (`/details/${nameCountry}`)
     }
 

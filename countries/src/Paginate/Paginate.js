@@ -49,7 +49,7 @@ export const Paginate = ({ records, limit, current, delta, fixed, onChange }) =>
                 <Page idx={idx} active= {current === idx} onChange= {onChange} />
             ))}
 
-            {end && end[0] !== current && (<Button onClick= {() => onChange(current + 1)} > {`>`} </Button>)}
+            {end && end.length !== 0 && end[0] !== current  && (<Button onClick= {() => onChange(current + 1)} > {`>`} </Button>)}
         </Div>
     )
 }
